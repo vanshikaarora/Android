@@ -1,27 +1,27 @@
 <tabs>
     <tab
         id="@+id/tab_1"
-        icon="@drawable/ic_favorites"
+        icon="@drawable/ic_launcher_background"
         title="Favorites"
         barColorWhenSelected="@color/tab1_color"/>
     <tab
         id="@+id/tab_2"
-        icon="@drawable/ic_nearby"
+        icon="@drawable/ic_launcher_background"
         title="Nearby"
         barColorWhenSelected="@color/tab2_color"/>
     <tab
         id="@+id/tab_3"
-        icon="@drawable/ic_friends"
+        icon="@drawable/ic_launcher_background"
         title="Friends"
         barColorWhenSelected="@color/tab3_color"/>
     <tab
         id="@+id/tab_4"
-        icon="@drawable/ic_favorites"
+        icon="@drawable/ic_launcher_background"
         title="Favorites"
         barColorWhenSelected="@color/tab4_color"/>
     <tab
         id="@+id/tab_5"
-        icon="@drawable/ic_favorites"
+        icon="@drawable/ic_launcher_background"
         title="Favorites"
         barColorWhenSelected="@color/tab5_color"/>
 </tabs>
