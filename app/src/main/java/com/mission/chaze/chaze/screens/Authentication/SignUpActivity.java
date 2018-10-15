@@ -1,6 +1,8 @@
 package com.mission.chaze.chaze.screens.Authentication;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -9,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mission.chaze.chaze.R;
+import com.mission.chaze.chaze.models.UserProfile;
+import com.mission.chaze.chaze.repository.room.AppDatabase;
 import com.mission.chaze.chaze.screens.Homepage.HomeActivity;
 import com.mission.chaze.chaze.screens.base.BaseActivity;
 
@@ -16,6 +20,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class SignUpActivity extends BaseActivity implements SignUpContract.View {
 
@@ -41,7 +46,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
     EditText signUpConfirmPass;
 
     @BindView(R.id.signup_submit_btn)
-    EditText signUpSubmitBtn;
+    Button signUpSubmitBtn;
+
+    AppDatabase db;
 
     @Inject
     SignUpContract.Presenter<SignUpContract.View> mPresenter;
@@ -54,6 +61,9 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
         ButterKnife.bind(this);
 
         getSupportActionBar().hide();
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"user_profile")
+                .build();
 
         loginBtn.setOnClickListener(view -> {
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
@@ -75,10 +85,18 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
                     && !TextUtils.isEmpty(signUpPass.getText().toString())
                     && !TextUtils.isEmpty(signUpConfirmPass.getText().toString())
                     && signUpPass.getText().toString().equals(signUpConfirmPass.getText().toString()))
-            {
-                mPresenter.doSignUp(signUpName.getText().toString(),
+            {  new task().execute("");
+                /*mPresenter.doSignUp(signUpName.getText().toString(),
                                     signUpMobile.getText().toString(),
-                                    signUpPass.getText().toString());
+                                    signUpPass.getText().toString());*/
+
+
+                /*AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });*/
             }
 
             else if(TextUtils.isEmpty(signUpName.getText().toString()))
@@ -112,5 +130,21 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
     public void showSignUpResult()
     {
 
+    }
+    public class task extends AsyncTask<String,String,String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            Timber.v(signUpMobile.getText().toString()+" "+signUpName.getText().toString());
+
+            UserProfile data=new UserProfile(signUpName.getText().toString(),signUpMobile.getText().toString(),"","","");
+            db.userDao().InsertUserLoginData(data);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
     }
 }
