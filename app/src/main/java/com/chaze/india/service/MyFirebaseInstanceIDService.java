@@ -41,7 +41,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
         // Saving reg id to shared preferences
-        storeRegIdInPref(refreshedToken);
+        //storeRegIdInPref(refreshedToken);
         storeTokenInDjango(refreshedToken);
 
         // sending reg id to your server
@@ -56,13 +56,13 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
 
-    private void storeRegIdInPref(String token) {
+    /*private void storeRegIdInPref(String token) {
         sharedPreference = new SessionManager(getApplicationContext());
         sharedPreference.setFcmToken(token);
     }
 
     private String getRegIdFromPref() {
         return sharedPreference.getFcmToken();
-    }
+    }*/
 }
 
